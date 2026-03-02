@@ -1,0 +1,59 @@
+\\Parte 3 – Estrutura de Dados (Questões Teóricas – Iniciais)\\ 
+
+#1. O que é uma estrutura de dados?
+Uma estrutura de dados é uma forma organizada de armazenar e gerenciar informações na memória de um computador, 
+permitindo que esses dados sejam acessados e manipulados de maneira eficiente.
+Ela define a organização lógica dos dados, bem como as operações que podem ser realizadas sobre eles,
+sendo fundamental para o desenvolvimento de programas estruturados e eficientes. 
+
+#2. Qual a diferença entre variável simples e vetor? 
+Uma variável simples armazena apenas um único valor por vez, ocupando um espaço específico na memória. 
+Já o vetor é uma estrutura que permite armazenar múltiplos valores do mesmo tipo em posições consecutivas de memória, 
+possibilitando o acesso individual a cada elemento por meio de índices. 
+Assim, enquanto a variável simples representa uma única informação, o vetor representa um conjunto organizado de informações do mesmo tipo.
+
+#3. O que é um vetor na linguagem C? 
+Em C, um vetor é uma estrutura de dados homogênea (todos os elementos são do mesmo tipo) 
+e estática (o tamanho é definido na criação). 
+Os elementos são armazenados de forma contígua (um grudado no outro) na memória RAM.
+
+#4. O que é uma matriz? Em que ela difere de um vetor?
+A matriz é uma estrutura de dados que organiza elementos em duas dimensões, 
+geralmente representadas por linhas e colunas. Diferentemente do vetor, 
+que possui apenas uma dimensão e organiza os dados em sequência linear, 
+a matriz permite representar informações de forma bidimensional, 
+sendo adequada para situações que exigem organização em formato de tabela. 
+
+#5. Para que serve uma struct na linguagem C?
+A struct na linguagem C é utilizada para agrupar diferentes tipos de dados sob um único identificador, 
+formando um novo tipo estruturado. 
+Ela permite representar entidades mais complexas, 
+compostas por múltiplas características, 
+organizando informações relacionadas de forma lógica e facilitando o tratamento de dados compostos dentro de um programa. 
+
+#6. O que significa dizer que uma estrutura de dados é linear?
+Significa que os elementos estão organizados em uma sequência lógica, 
+onde cada elemento (exceto o primeiro e o último) tem um antecessor e um sucessor bem definidos. 
+Exemplos: Vetores, Listas Encadeadas, Pilhas e Filas 
+
+#7. O que é alocação estática de memória?
+Alocação estática de memória é o processo pelo qual o espaço de memória
+é reservado durante a compilação do programa, antes de sua execução. 
+Nesse tipo de alocação, o tamanho da estrutura de dados é definido previamente e permanece fixo durante toda a execução, 
+não podendo ser alterado dinamicamente 
+
+#8. Qual a importância das estruturas de dados na programação?
+As estruturas de dados são fundamentais na programação porque determinam a forma como as informações são organizadas, armazenadas e acessadas. 
+Uma escolha adequada de estrutura influencia diretamente a eficiência do programa, tanto em termos de desempenho quanto de uso de memória, 
+além de contribuir para a clareza e manutenção do código 
+
+#9. O que é um algoritmo e qual sua relação com estruturas de dados?
+Um algoritmo é uma sequência finita e ordenada de instruções destinadas a resolver um problema ou realizar uma tarefa específica. 
+Sua relação com as estruturas de dados é direta, pois o algoritmo manipula dados que precisam estar organizados de maneira adequada. 
+A eficiência de um algoritmo está frequentemente ligada à estrutura de dados utilizada para armazenar e gerenciar essas informações. 
+
+#10. Cite exemplos de estruturas de dados básicas utilizadas em C.
+Entre as estruturas de dados básicas utilizadas em C destacam-se variáveis simples, 
+vetores, matrizes, estruturas definidas com struct, listas encadeadas, pilhas e filas. 
+Essas estruturas permitem organizar dados de diferentes formas, 
+atendendo a diversas necessidades de armazenamento e processamento dentro de um programa.
