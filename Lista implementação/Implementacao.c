@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
+typedef struct
+{
 
     char nome[50];
     int idade;
@@ -13,8 +14,136 @@ typedef struct {
 Pacientes pacientes[100];
 int total = 0;
 
-void cadastroPaciente() {
+Pacientes emergencia[100];
+int topoEmergencia = -1;
 
+Pacientes consulta[100];
+int frenteConsulta = 0;
+int trasConsulta = -1;
+
+Pacientes exame[8];
+int frenteExame = 0;
+int trasExame = -1;
+int totalExame = 0;
+
+
+void relatorios() {
+    int totalEmergencia = topoEmergencia + 1;
+    int totalConsulta = 0;
+
+    if (trasConsulta >= frenteConsulta) {
+
+        totalConsulta = trasConsulta - frenteConsulta + 1;
+    }
+
+    printf("\n=== Relatorios ===\n");
+    printf("Total geral de pacientes: %d\n", total);
+    printf("Pacientes na Emergencia: %d\n", totalEmergencia);
+    printf("Pacientes na Consulta: %d\n", totalConsulta);
+    printf("Pacientes nos Exames: %d\n", totalExame);
+
+}
+
+void enfileirarExame(Pacientes p) {
+    if(totalExame == 8) {
+        printf("\nFila exames cheia!\n");
+        printf("Removendo mais antigo");
+    
+
+    frenteExame = (frenteExame + 1) % 8;
+    totalExame--;
+}
+    trasExame = (trasExame + 1) % 8;
+    exame[trasExame] = p;
+
+    totalExame++;
+
+    printf("Paciente enviado para exames!\n");
+}
+
+void atenderExame() {
+    if(totalExame == 0) {
+        printf("Sem pacientes para exame!\n");
+    }
+    
+    Pacientes p = exame[frenteExame];
+
+    frenteExame = (frenteExame + 1) % 8;
+
+    totalExame--;
+
+    printf("\n=== Paciente atendido ===\n");
+    printf("Nome: %s\n", p.nome);
+    printf("Idade: %d\n", p.idade);
+    printf("Gravidade: %d\n", p.gravidade);
+}
+
+
+void enfileirarConsulta(Pacientes p)
+{
+
+    if (trasConsulta == 99)
+    {
+        printf("Fila consulta cheia!\n");
+        return;
+    }
+
+    trasConsulta++;
+    consulta[trasConsulta] = p;
+    printf("Paciente enviado para consulta!");
+}
+
+void atenderConsulta()
+{
+    if (frenteConsulta > trasConsulta)
+    {
+        printf("Sem pacientes esperando consulta!\n");
+        return;
+    }
+
+    Pacientes p = consulta[frenteConsulta];
+
+    frenteConsulta++;
+
+    printf("\n=== Paciente atendido ===\n");
+    printf("Nome: %s\n", p.nome);
+    printf("Idade: %d\n", p.idade);
+    printf("Gravidade: %d\n", p.gravidade);
+}
+
+void empilharEmergencia(Pacientes p)
+{
+
+    if (topoEmergencia == 99)
+    {
+        printf("Emergencia cheia!\n");
+        return;
+    }
+    topoEmergencia++;
+    emergencia[topoEmergencia] = p;
+    printf("Paciente enviado para Emergencia!\n");
+}
+
+void atenderEmergencia()
+{
+    if (topoEmergencia == -1)
+    {
+        printf("\nSem pacientes na Emergencia!\n");
+        return;
+    }
+
+    Pacientes p = emergencia[topoEmergencia];
+
+    printf("\n=== Paciente atendido ===\n");
+    printf("Nome: %s\n", p.nome);
+    printf("Idade: %d\n", p.idade);
+    printf("Gravidade: %d\n", p.gravidade);
+
+    topoEmergencia--;
+}
+
+void cadastroPaciente()
+{
 
     printf("\n=== Cadastro ===\n");
 
@@ -31,7 +160,7 @@ void cadastroPaciente() {
     {
 
         pacientes[total].tipo = 1;
-        printf("Paciente direcionado para Emegencia!\n");
+        empilharEmergencia(pacientes[total]);
     }
     else
     {
@@ -42,20 +171,97 @@ void cadastroPaciente() {
             "2 - Consulta.\n"
             "3 - Exame.\n");
         scanf("%d", &pacientes[total].tipo);
+
+        if (pacientes[total].tipo == 1)
+        {
+            empilharEmergencia(pacientes[total]);
+        }
+        else if (pacientes[total].tipo == 2)
+        {
+            enfileirarConsulta(pacientes[total]);
+
+        } else if (pacientes[total].tipo == 3) {
+            
+            enfileirarExame(pacientes[total]);
+        }
     }
 
     printf("Paciente cadastrado com sucesso!\n");
+
     total++;
 
     printf("\nTotal de pacientes cadastrados: %d", total);
+}
+
+void mostrarPaciente()
+{
+
+    if (total == 0)
+    {
+
+        printf("\nNenhum paciente cadastrado!\n");
+        return;
+    }
+
+    printf("\n=== LISTA DE PACIENTES NA EMERGENCIA ===\n");
+
+    for (int i = 0; i < total; i++)
+    {
+        if (pacientes[i].tipo == 1)
+        {
+            printf("Nome: %s\n", pacientes[i].nome);
+            printf("Idade: %d\n", pacientes[i].idade);
+            printf("Gravidade: %d\n", pacientes[i].gravidade);
+        }
+    }
+
+    printf("\n=== LISTA DE PACIENTES NA CONSULTA ===\n");
+
+    for (int i = 0; i < total; i++)
+    {
+        if (pacientes[i].tipo == 2)
+        {
+            printf("Nome: %s\n", pacientes[i].nome);
+            printf("Idade: %d\n", pacientes[i].idade);
+            printf("Gravidade: %d\n", pacientes[i].gravidade);
+        }
+    }
+    printf("\n=== LISTA DE PACIENTES NA EXAME ===\n");
+
+    for (int i = 0; i < total; i++)
+    {
+        if (pacientes[i].tipo == 3)
+        {
+            printf("Nome: %s\n", pacientes[i].nome);
+            printf("Idade: %d\n", pacientes[i].idade);
+            printf("Gravidade: %d\n", pacientes[i].gravidade);
+        }
+    }
     return;
 }
 
-int main(){
+void transferirConsultaEmergencia() {
+    if(frenteConsulta > trasConsulta) {
+        printf("Sem pacientes na consulta!");
+        return;
+    }
+    Pacientes p = consulta[frenteConsulta];
+    frenteConsulta++;
+
+    p.tipo = 1;
+
+    empilharEmergencia(p);
+
+    printf("Paciente transferido da consulta para emergencia!\n");
+}
+
+int main()
+{
 
     int opcao;
 
-    do {
+    do
+    {
         printf("\n==== HOSPITAL ====\n"
                "1 - Cadastrar paciente.\n"
                "2 - Atender pacientes\n"
@@ -67,28 +273,65 @@ int main(){
 
         scanf("%d", &opcao);
 
-        if (opcao == 1) {
+        if (opcao == 1)
+        {
             cadastroPaciente();
+        }
+        else if (opcao == 2)
+        {
 
-        } else if (opcao == 2) {
-            /* atenderPaciente(); */
+            int atendimento;
 
-        } else if (opcao == 3) {
-            /* mostrarPaciente();
- */
-        } else if (opcao == 4) {
-            /* transferirPaciente(); */
+            printf("Escolha qual tipo de atendimento:\n");
+            printf(
+                "1 - Emergencia.\n"
+                "2 - Consulta.\n"
+                "3 - Exame.\n"
+                "Opcao: ");
+            scanf("%d", &atendimento);
 
-        } else if (opcao == 5) {
-            /* relatorios(); */
-
-        } else if (opcao == 0) {
+            if (atendimento == 1)
+            {
+                printf("Atendendo Emergencia...\n");
+                atenderEmergencia();
+            }
+            else if (atendimento == 2)
+            {
+                printf("Atendendo consulta...");
+                atenderConsulta();
+            }
+            else if (atendimento == 3)
+            {
+                printf("Atendendo exames...");
+                atenderExame();
+            }
+            else
+            {
+                printf("Opcao invalida!");
+                return 0;
+            }
+        }
+        else if (opcao == 3)
+        {
+            mostrarPaciente();
+        }
+        else if (opcao == 4)
+        { printf("\nTransferindo o primeiro da consulta para Emergencia (sera atendido primeiro!)\n");
+            
+        }
+        else if (opcao == 5)
+        {
+            relatorios();
+        }
+        else if (opcao == 0)
+        {
             printf("\nSaindo do programa... Obrigado!");
-
-        } else {
+        }
+        else
+        {
             printf("Opcao invalida!");
         }
-    } while ( opcao != 0 );
+    } while (opcao != 0);
 
-        return 0;
+    return 0;
 }
