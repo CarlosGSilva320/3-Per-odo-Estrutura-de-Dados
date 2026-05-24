@@ -66,7 +66,28 @@ void dequeue() {
         printf("\nFila de Prioridade:\n");
 
         for(int i = 0; i < tamanho; i++) {
-            printf("Valor")
+            printf("Valor: %d | Prioridade: %d\n",
+                fila[i].valor,
+            fila[i].prioridade);
         }
-    
+}
+
+int main() {
+
+    enqueue(10, 2);
+    enqueue(20, 5);
+    enqueue(30, 1);
+    enqueue(40, 4);
+
+    exibirFila();
+
+    printf("\n");
+
+    dequeue();
+
+    printf("\n");
+
+    exibirFila();
+
+    return 0;
 }

@@ -2,12 +2,13 @@
 #include <stdlib.h>
 
 typedef struct {
-    
+
     int *dados;
     int frente;
     int tras;
     int tamanho;
     int capacidade;
+    
 } Fila;
 
 Fila* criarFila(int capacidade) {
@@ -72,7 +73,7 @@ void exibirFila(Fila *f) {
     int i = f-> frente;
 
     for (int count = 0; count < f-> tamanho; count++) {
-        printf("%d", *(f->dados + i));
+        printf("%d ", *(f->dados + i));
 
         i = (i + 1) % f-> capacidade;
     }

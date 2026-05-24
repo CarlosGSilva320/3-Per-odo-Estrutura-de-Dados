@@ -1,15 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "hospital.h"
+#include <string.h>
 
-typedef struct
-{
-
-    char nome[50];
-    int idade;
-    int gravidade;
-    int tipo;
-
-} Pacientes;
 
 Pacientes pacientes[100];
 int total = 0;
@@ -47,7 +38,7 @@ void relatorios() {
 void enfileirarExame(Pacientes p) {
     if(totalExame == 8) {
         printf("\nFila exames cheia!\n");
-        printf("Removendo mais antigo");
+        printf("Removendo mais antigo\n");
     
 
     frenteExame = (frenteExame + 1) % 8;
@@ -241,97 +232,32 @@ void mostrarPaciente()
 }
 
 void transferirConsultaEmergencia() {
+
     if(frenteConsulta > trasConsulta) {
+
         printf("Sem pacientes na consulta!");
         return;
     }
+
     Pacientes p = consulta[frenteConsulta];
+
     frenteConsulta++;
 
     p.tipo = 1;
 
     empilharEmergencia(p);
 
-    printf("Paciente transferido da consulta para emergencia!\n");
+    for (int i = 0; i < total; i++) {
+
+        if (strcmp(pacientes[i].nome, p.nome) == 0) {
+
+            pacientes[i].tipo = 1;
+        }
+    }
+
+    printf(
+        "Paciente transferido da consulta "
+        "para emergencia!\n"
+    );
 }
 
-int main()
-{
-
-    int opcao;
-
-    do
-    {
-        printf("\n==== HOSPITAL ====\n"
-               "1 - Cadastrar paciente.\n"
-               "2 - Atender pacientes\n"
-               "3 - Mostrar pacientes\n"
-               "4 - Transferir pacientes\n"
-               "5 - Relatorios\n"
-               "0 - Sair.\n"
-               "Opcao: ");
-
-        scanf("%d", &opcao);
-
-        if (opcao == 1)
-        {
-            cadastroPaciente();
-        }
-        else if (opcao == 2)
-        {
-
-            int atendimento;
-
-            printf("Escolha qual tipo de atendimento:\n");
-            printf(
-                "1 - Emergencia.\n"
-                "2 - Consulta.\n"
-                "3 - Exame.\n"
-                "Opcao: ");
-            scanf("%d", &atendimento);
-
-            if (atendimento == 1)
-            {
-                printf("Atendendo Emergencia...\n");
-                atenderEmergencia();
-            }
-            else if (atendimento == 2)
-            {
-                printf("Atendendo consulta...");
-                atenderConsulta();
-            }
-            else if (atendimento == 3)
-            {
-                printf("Atendendo exames...");
-                atenderExame();
-            }
-            else
-            {
-                printf("Opcao invalida!");
-                return 0;
-            }
-        }
-        else if (opcao == 3)
-        {
-            mostrarPaciente();
-        }
-        else if (opcao == 4)
-        { printf("\nTransferindo o primeiro da consulta para Emergencia (sera atendido primeiro!)\n");
-            
-        }
-        else if (opcao == 5)
-        {
-            relatorios();
-        }
-        else if (opcao == 0)
-        {
-            printf("\nSaindo do programa... Obrigado!");
-        }
-        else
-        {
-            printf("Opcao invalida!");
-        }
-    } while (opcao != 0);
-
-    return 0;
-}
